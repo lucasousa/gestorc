@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     # my apps
     "core",
     "finance",
+    "widget_tweaks",
+    "website",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "core.CustomUser"
+
+# auth
+LOGIN_URL = "core:login"
+LOGIN_REDIRECT_URL = "core:index"
+LOGOUT_URL = "logout"

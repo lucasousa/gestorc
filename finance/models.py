@@ -19,13 +19,16 @@ class Address(BaseModel):
         verbose_name = "Endereço"
         verbose_name_plural = "Endereços"
 
+    def __str__(self) -> str:
+        return f"Endereço Nº {self.number}"
+
 
 class Company(BaseModel):
     cnpj = models.CharField(_("CPNJ do cliente"), max_length=14, blank=False, null=False)
     fantasy_name = models.CharField(_("Nome fantasia"), max_length=50, blank=False, null=False)
     social_reason = models.CharField(_("Razão social"), max_length=50, blank=False, null=False)
-    address = models.OneToOneField(
-        "finance.Address",
+    address = models.ForeignKey(
+        Address,
         verbose_name=_("Endereço"),
         on_delete=models.CASCADE,
         null=False,
@@ -36,6 +39,9 @@ class Company(BaseModel):
     class Meta:
         verbose_name = "Cliente"
         verbose_name_plural = "Clientes"
+
+    def __str__(self) -> str:
+        return self.fantasy_name
 
 
 class Invoice(BaseModel):
@@ -51,6 +57,9 @@ class Invoice(BaseModel):
     class Meta:
         verbose_name = "Recibo"
         verbose_name_plural = "Recibos"
+
+    def __str__(self) -> str:
+        return f"Fatura - {self.client.fantasy_name}"
 
 
 class Contract(BaseModel):
@@ -73,3 +82,6 @@ class Contract(BaseModel):
     class Meta:
         verbose_name = "Contrato"
         verbose_name_plural = "Contratos"
+
+    def __str__(self) -> str:
+        return f"Contrato - {self.client.fantasy_name}"

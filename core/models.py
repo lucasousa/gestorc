@@ -59,3 +59,6 @@ class Profile(BaseModel):
     class Meta:
         verbose_name = "Perfil"
         verbose_name_plural = "Perfis"
+
+    def __str__(self) -> str:
+        return self.name
