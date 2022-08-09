@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GestorC | {% block title %}{% endblock title %} </title>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/bulma/bulma.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">
+  {% block extra_css %}
+  {% endblock %}
+  <script src="{% static 'javascript/dashboard.js' %}" defer></script>
+</head>
+
+<body>
+  <header class="hero header-menu-top">
+    <div class="hero-head">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand is-flex is-align-items-center">
+          <a class="navbar-item is--brand" href="/core">
+            <img class="navbar-brand-logo" src="{% static 'images/logo.webp' %}" alt="Logo GestorC">
+          </a>
+          <span class="navbar-burger js-toggle-menu-left-btn" data-target="navMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarExampleTransparentExample" class="navbar-end navbar-menu">
+          <form action="." class="is-danger" method="post">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a href="{% url 'core:logout' %}" class="button mt-1 mb-0 logout-button">
+                  <span>
+                    Sair
+                  </span>
+                  <span class="icon">
+                    <i class="fa fa-power-off" aria-hidden="true"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="columns">
+      <div class="column is-2 menu-left js-menu-left">
+        <nav class="menu">
+          <ul class="menu-list">
+            <li>
+              <a href="{% url 'core:index' %}" class="has-icons-left">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-home"></i>
+                </span>
+                &nbsp;Início
+              </a>
+            </li>
+          </ul>
+          <ul class="menu-list">
+            <li>
+              <a href="{% url 'core:index' %}" class="has-icons-left">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-home"></i>
+                </span>
+                &nbsp;Clientes
+              </a>
+            </li>
+          </ul>
+          <ul class="menu-list">
+            <li>
+              <a href="{% url 'core:index' %}" class="has-icons-left">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-home"></i>
+                </span>
+                &nbsp;Recibos
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="column">
+        <div class="container has-addons-centered">
+          {% block body %}
+          {% endblock %}
+        </div>
+      </div>
+  </section>
+
+  <footer class="footer has-background-black pb-6">
+    <div class="container">
+      <div class="content has-text-centered">
+        <div>
+          <p class="has-text-white">
+            Desenvolvido por
+            <a href="https://github.com/lucasousa" target="_blank" rel="noopener noreferrer" class="has-text-weight-medium has-text-white">
+              <i class="fab fa-github has-text-white"></i>&nbsp;Lucas Sousa
+            </a>
+            e
+            <a href="https://github.com/spbdlelis" target="_blank" rel="noopener noreferrer" class="has-text-weight-medium has-text-white">
+              <i class="fab fa-github has-text-white"></i>&nbsp;Samuel Lélis
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
+
+{% block scripts %}
+{% endblock %}

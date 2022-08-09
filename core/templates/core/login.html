@@ -1,0 +1,68 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      GestorC | Login
+    </title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.webp' %}" />
+    <link rel="stylesheet" href="{% static 'css/bulma/bulma.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/pages/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}" />
+  </head>
+
+  <body>
+<section class="hero has-text-white is-fullheight">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <div class="column is-4 is-offset-4">
+        <div class="box">
+          <figure class="avatar">
+            <img src="{% static 'images/logo.webp' %}" class="login-avatar">
+          </figure>
+          <h3 class="title has-text-info">Entrar na conta</h3>
+          <hr class="is-white">
+          <form action="{% url 'core:login' %}" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+            <p class="help is-danger">
+              Seu nome de usuário e senha não coincidem. Por favor, tente novamente.
+            </p>
+            {% endif %}
+            <br>
+            <div class="field">
+              <div class="control has-icons-left">
+                {% render_field form.username|append_attr:"class:input is-medium" placeholder="Usuário"%}
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control has-icons-left">
+                {% render_field form.password|append_attr:"class:input is-medium" placeholder="Senha"%}
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            
+            <button class="button is-block is-info is-medium is-fullwidth">
+              Login
+              <i class="fas fa-sign-in-alt"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+</section>
+</body>
+
+</html>
