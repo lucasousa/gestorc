@@ -119,7 +119,7 @@
     $('#listItems').on('click', '.deleteItem', function (e) {
         e.preventDefault();
         const id = $(this).attr("data-id")
-        const urlDel = "https://{{ request.get_host }}/finance/invoice/" + id + "/deletar/"
+        const urlDel = "http://{{ request.get_host }}/finance/invoice/" + id + "/deletar/"
         const linha_editada = $(e.currentTarget).closest('tr')
         token = "{{csrf_token}}";
 
