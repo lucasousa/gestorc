@@ -2,12 +2,12 @@
 {% load widget_tweaks %}
 {% load static %}
 
-{% block title %} GestorC | Adicionar Cliente {% endblock %}
+{% block title %} GestorC | Adicionar Contratos {% endblock %}
 
 {% block body %}
 <section class="section">
     <div class="container box">
-        <h1 class="title is-4">Adicionar Cliente</h1>
+        <h1 class="title is-4">Adicionar Contratos</h1>
         <div class="columns">
             <div class="column is-8">
                 <div class="container">
@@ -15,7 +15,18 @@
                         {% csrf_token %}
                         
                         {% for field in form %}
-                        {% if field.label != "Endereço" %}
+                        {% if field.label == "Data de início do contrato" or field.label == "Data de fim do contrato" %}
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label">{{field.label}}</label>
+                                    <div class="control is-danger">
+                                        {% render_field field|append_attr:"class:input" type="date"%}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       {% else %}
                         <div class="field is-horizontal">
                             <div class="field-body">
                                 <div class="field">
@@ -29,16 +40,8 @@
                                 </div>
                             </div>
                         </div>
-                        {% else %}
-                        <div class="field">
-                            <label for="{{field.id_for_label}}" class="label">{{field.label}}</label>
-                            <div class="select is-fullwidth">
-                                {{field}}
-                            </div>
-                        </div>
                         {% endif %}
-                        {% endfor %}
-                        
+                        {%endfor%}
                         <div class="field is-grouped" style="padding-top: 2rem;">
                             <div class="control">
                                 <button class="button is-success">

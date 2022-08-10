@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Address, Company
+from .models import Address, Company, Contract, Invoice
 
 
 class AddressForm(forms.ModelForm):
@@ -21,4 +21,19 @@ class CompanyForm(forms.ModelForm):
         super(CompanyForm, self).__init__(*args, **kwargs)
 
 
-AddressFormsInline = forms.inlineformset_factory(Company, Address, form=AddressForm)
+class ContractForm(forms.ModelForm):
+    class Meta:
+        model = Contract
+        exclude = ["created_at", "update_at", "uuid"]
+
+    def __init__(self, *args, **kwargs):
+        super(ContractForm, self).__init__(*args, **kwargs)
+
+
+class InvoiceForm(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        exclude = ["created_at", "update_at", "uuid"]
+
+    def __init__(self, *args, **kwargs):
+        super(InvoiceForm, self).__init__(*args, **kwargs)

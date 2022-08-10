@@ -23,20 +23,29 @@
           <a href="{% url 'finance:company_list' %}">
             <article class="tile is-child box">
               <span class="icon has-text-white">
-                <i class="fa-solid fa-building"></i>
+                <i class="fas fa-book fa-2x"></i>
               </span>
               <p class="subtitle is-6 mt-2">Clientes</p>
             </article>
           </a>
         </div>
         <div class="tile is-parent zoom">
-          {% comment %} <a href="{% url 'finance:invoice_list' %}"> {% endcomment %}
-          <a href="#">
+          <a href="{% url 'finance:contract_list' %}">
             <article class="tile is-child box">
               <span class="icon has-text-white">
                 <i class="fas fa-book fa-2x"></i>
               </span>
-              <p class="subtitle is-6 mt-2">Recibos</p>
+              <p class="subtitle is-6 mt-2">Contratos</p>
+            </article>
+          </a>
+        </div>
+        <div class="tile is-parent zoom">
+          <a href="{% url 'finance:invoice_list' %}">
+            <article class="tile is-child box">
+              <span class="icon has-text-white">
+                <i class="fas fa-book fa-2x"></i>
+              </span>
+              <p class="subtitle is-6 mt-2">Faturas</p>
             </article>
           </a>
         </div>

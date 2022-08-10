@@ -45,7 +45,7 @@ class Company(BaseModel):
 
 
 class Invoice(BaseModel):
-    value = models.DecimalField(_("Valor da fatura"), max_digits=5, decimal_places=2)
+    value = models.DecimalField(_("Valor da fatura"), max_digits=7, decimal_places=2)
     client = models.ForeignKey("finance.Company", verbose_name=_("Cliente"), on_delete=models.CASCADE, blank=False, null=False)
     accountant = models.ForeignKey(
         "core.CustomUser", verbose_name=_("Contador"), on_delete=models.CASCADE, null=False, blank=False
