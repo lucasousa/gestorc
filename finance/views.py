@@ -1,13 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.forms import forms
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .forms import CompanyForm, ContractForm, InvoiceForm
-from .models import Company, Contract, Invoice
+from .forms import CompanyForm, ContractForm, InvoiceForm, AddressForm
+from .models import Company, Contract, Invoice, Address
 
 
 @method_decorator(login_required, name="dispatch")
@@ -159,9 +160,9 @@ class CompanyDetail(DetailView):
 
 @method_decorator(login_required, name="dispatch")
 class CompanyCreate(CreateView):
-    model = Company
+    model = Address
     template_name = "company/add.html"
-    form_class = CompanyForm
+    form_class = AddressForm
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -180,9 +181,9 @@ class CompanyCreate(CreateView):
 
 @method_decorator(login_required, name="dispatch")
 class CompanyUpdate(UpdateView):
-    model = Company
+    model = Address
     template_name = "company/add.html"
-    form_class = CompanyForm
+    form_class = AddressForm
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -197,6 +198,20 @@ class CompanyUpdate(UpdateView):
 
     def get_success_url(self):
         return reverse("finance:company_list")
+
+    def get_initial(self):
+        object = self.get_object()
+        company = object.company_set.all().first()
+        ret = super().get_initial()
+        ret.update(
+            {
+                "cnpj": company.cnpj,
+                "fantasy_name": company.fantasy_name,
+                "social_reason": company.social_reason,
+                "email": company.email,
+            }
+        )
+        return ret
 
 
 @login_required

@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_cpf_cnpj.fields import CPFField, CNPJField
 
 from core.managers import UserManager
 
@@ -53,8 +54,8 @@ class Profile(BaseModel):
     user = models.OneToOneField("core.CustomUser", verbose_name=_("usuário"), on_delete=models.CASCADE)
     name = models.CharField("Nome", max_length=50, null=False, blank=False)
     image = models.ImageField("Imagem", upload_to="media/avatar", default="default.jpg", null=True, blank=True)
-    cpf = models.CharField(_("CPF"), max_length=11, blank=True, null=True, unique=True)
-    cnpj = models.CharField(_("CNPJ"), max_length=14, blank=True, null=True, unique=True)
+    cpf = CPFField(masked=False, verbose_name=_("CPF"), blank=True, null=True, unique=True)
+    cnpj = CNPJField(masked=False, verbose_name=_("CNPJ"), blank=True, null=True, unique=True)
 
     class Meta:
         verbose_name = "Perfil"

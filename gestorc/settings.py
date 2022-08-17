@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third apps
     "django_extensions",
+    "django_cpf_cnpj",
     # my apps
     "core",
     "finance",

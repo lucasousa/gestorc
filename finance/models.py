@@ -1,18 +1,33 @@
+from django.core.validators import RegexValidator, MaxLengthValidator, MinLengthValidator
+
 from core.models import BaseModel
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_cpf_cnpj.fields import CNPJField
 
 from .enums import ContractStatus, InvoiceFrequencyType, InvoiceStatus
 
 
 class Address(BaseModel):
     street = models.CharField(_("Rua"), max_length=500, null=True, blank=True)
-    number = models.CharField(_("Número"), max_length=60, null=True, blank=True)
+    number = models.CharField(
+        _("Número"), validators=[RegexValidator("^[0-9]*$", message=_("Somente números"))], max_length=60, null=True, blank=True
+    )
     city = models.CharField(_("Cidade"), max_length=200, null=True, blank=True)
     state = models.CharField(_("Estado"), max_length=10, null=True, blank=True)
-    zipcode = models.CharField(_("CEP"), max_length=60, null=True, blank=True)
+    zipcode = models.CharField(
+        _("CEP"),
+        validators=[
+            RegexValidator("^[0-9]*$", message=_("Somente números")),
+            MaxLengthValidator(8, message=_("Tamanho inválido")),
+            MinLengthValidator(8, message=_("Tamanho inválido")),
+        ],
+        max_length=60,
+        null=True,
+        blank=True,
+    )
     complement = models.CharField(_("Complemento"), max_length=200, null=True, blank=True)
-    neighborhood = models.CharField(_("Bairro"), max_length=200, null=True, default="neighborhood")
+    neighborhood = models.CharField(_("Bairro"), max_length=200, null=True, blank=True)
     reference = models.CharField(_("Referência"), default="", max_length=160, null=True, blank=True)
 
     class Meta:
@@ -24,7 +39,7 @@ class Address(BaseModel):
 
 
 class Company(BaseModel):
-    cnpj = models.CharField(_("CPNJ do cliente"), max_length=14, blank=False, null=False)
+    cnpj = CNPJField(masked=False, verbose_name=_("CPNJ do cliente"), blank=False, null=False)
     fantasy_name = models.CharField(_("Nome fantasia"), max_length=50, blank=False, null=False)
     social_reason = models.CharField(_("Razão social"), max_length=50, blank=False, null=False)
     address = models.ForeignKey(
