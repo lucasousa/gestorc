@@ -16,6 +16,7 @@ from django_cpf_cnpj.cpf import cpf_to_python
 from django_cpf_cnpj.cnpj import cnpj_to_python
 
 from .models import Address, Company, Contract, Invoice
+from .signals import create_invoices
 
 
 class CustomCNPJForm(CNPJForm):
@@ -121,6 +122,11 @@ class ContractForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ContractForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        if commit and self.instance.pk is None:
+            create_invoices(self.instance)
+        super(ContractForm, self).save(commit=commit)
 
 
 class InvoiceForm(forms.ModelForm):

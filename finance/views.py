@@ -68,7 +68,6 @@ class ContractCreate(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.save()
         form.save()
         messages.success(self.request, "Contrato cadastrado com sucesso.")
         return HttpResponseRedirect(self.get_success_url())

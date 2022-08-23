@@ -16,8 +16,15 @@ class ContractStatus(TextChoices):
 
 
 class InvoiceFrequencyType(TextChoices):
-    WEEKLY = "weekly", _("Semanal")
     MONTHLY = "monthly", _("Mensal")
     QUARTERLY = "quarterly", _("Trimestral")
     SEMIANNUAL = "semiannual", _("Semestral")
     ANNUALLY = "annually", _("Anual")
+
+
+HASHMAP_INVOICE_FREQUENCY = {
+    InvoiceFrequencyType.MONTHLY.value: 1,
+    InvoiceFrequencyType.QUARTERLY.value: 3,
+    InvoiceFrequencyType.SEMIANNUAL.value: 6,
+    InvoiceFrequencyType.ANNUALLY.value: 12,
+}
