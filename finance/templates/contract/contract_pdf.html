@@ -1,0 +1,135 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fatura - {{object.accountant.profile.name}}</title>
+    <style>
+        @page wrapper { margin: 3cm; }
+        * {
+            box-sizing: border-box;
+            color: #1d3263;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            margin: 48px auto;
+            max-width: 960px;
+            padding: 16px;
+        }
+
+        .wrapper header {
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .wrapper header img {
+            height: 120px;
+        }
+
+        .wrapper header div {
+            margin: 16px 0;
+        }
+
+        .wrapper header div * {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .wrapper main {
+            margin-top: 60px;
+        }
+
+        .wrapper main table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .wrapper main table tbody tr td {
+            border-bottom: 1px solid #cacaca;
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }
+
+        .wrapper main table tbody tr td:first-child {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <img src="https://ppg2.ufpi.br/static/images/logo/ufpi_logo.jpeg"
+                alt="Logotipo gestorC" />
+            <div>
+                <p>
+                    GestorC - Sistema de Controle de Contratos <br>
+                     {{object.accountant.profile.name}} Contabilidade
+                </p>
+            </div>
+            <p>Emitido em: <time>{{consultation_date}}</time></p>
+        </header>
+
+        <main>
+            <table>
+                <h4
+                    style=" background: #f4f4f4;
+                            border-bottom: 1.5px solid #cacaca;
+                            font-size: 1.2rem;
+                            font-weight: 700;
+                            padding: 16px;
+                            text-align: center;"
+                >
+                    {{object.accountant.profile.name}} Contabilidade
+                </h4>
+
+                <tbody>
+                    <tr>
+                        <td>Prestador de serviço:</td>
+                        <td>{{object.accountant.profile.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>CPF:</td>
+                        <td>{{object.accountant.profile.cpf}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tomador de serviços:</td>
+                        <td>{{ object.client.fantasy_name }}</td>
+                    </tr>
+                     <tr>
+                        <td>CNPJ:</td>
+                        <td>{{ object.client.cnpj }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ object.client.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>status do pagamento:</td>
+                        <td>{{object.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>Valor da fatura:</td>
+                        <td>
+                            {{object.invoice_value}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Data de vencimento:</td>
+                        <td>{{object.invoice_set.due_date|date:'d/m/Y H:i'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+
+</html>

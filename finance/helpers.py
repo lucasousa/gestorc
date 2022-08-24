@@ -1,17 +1,18 @@
 from datetime import datetime, timedelta
 
-from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
-
 from .enums import HASHMAP_INVOICE_FREQUENCY, InvoiceStatus
-from .models import Contract, Invoice
+from .models import Invoice
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 def create_invoices(instance):
     amount_of_months_between = HASHMAP_INVOICE_FREQUENCY[instance.invoice_frequency]
     total_months = (instance.end_date - instance.start_date).days // 30
     for period in range(total_months // amount_of_months_between):
-        due_date = datetime.now() + timedelta(days=30 * period * amount_of_months_between)
+        due_date = datetime.now() + timedelta(days=30 * (period+1) * amount_of_months_between)
         if due_date.isoweekday() == 7:
             due_date += timedelta(days=1)
         elif due_date.isoweekday() == 6:
@@ -23,4 +24,15 @@ def create_invoices(instance):
             accountant=instance.accountant,
             status=InvoiceStatus.IN_DAYS.value,
             due_date=due_date,
+            contract=instance
         )
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(html, result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None

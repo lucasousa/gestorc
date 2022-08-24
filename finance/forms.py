@@ -16,7 +16,7 @@ from django_cpf_cnpj.cpf import cpf_to_python
 from django_cpf_cnpj.cnpj import cnpj_to_python
 
 from .models import Address, Company, Contract, Invoice
-from .signals import create_invoices
+from .helpers import create_invoices
 
 
 class CustomCNPJForm(CNPJForm):
@@ -138,4 +138,6 @@ class InvoiceForm(forms.ModelForm):
         super(InvoiceForm, self).__init__(*args, **kwargs)
 
 
-CompanyInlineFormSet = modelform_factory(Company, fields=["cnpj", "fantasy_name", "social_reason", "email"], form=CompanyForm)
+CompanyInlineFormSet = modelform_factory(
+    Company, fields=["cnpj", "fantasy_name", "social_reason", "email"], form=CompanyForm
+)

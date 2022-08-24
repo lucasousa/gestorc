@@ -65,6 +65,9 @@ class Invoice(BaseModel):
     accountant = models.ForeignKey(
         "core.CustomUser", verbose_name=_("Contador"), on_delete=models.CASCADE, null=False, blank=False
     )
+    contract = models.ForeignKey(
+        "finance.Contract", verbose_name=_("Contrato"), on_delete=models.CASCADE, null=False, blank=False
+    )
     status = models.CharField(_("Status da fatura"), max_length=20, choices=InvoiceStatus.choices)
     payment_date = models.DateTimeField(_("Data de pagamento"), auto_now=False, auto_now_add=False, null=True)
     due_date = models.DateTimeField(_("Data de vencimento"), auto_now=False, auto_now_add=False)

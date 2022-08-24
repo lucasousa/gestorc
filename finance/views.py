@@ -1,14 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.forms import forms
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
+from django.views.generic import View
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .forms import CompanyForm, ContractForm, InvoiceForm, AddressForm
+from .forms import ContractForm, InvoiceForm, AddressForm
 from .models import Company, Contract, Invoice, Address
+from .helpers import render_to_pdf
+from datetime import datetime
+from django.template.loader import get_template
 
 
 @method_decorator(login_required, name="dispatch")
@@ -316,3 +319,28 @@ def invoice_delete(request, pk):
     invoice = get_object_or_404(Invoice, pk=pk)
     invoice.delete()
     return JsonResponse({"msg": "Fatura excluída com sucesso!", "code": "1"})
+
+
+class GeneratePDF(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('contract/contract_pdf.html')
+        contract = Contract.objects.get(id=kwargs['id'])
+        context = {
+            'object':contract,
+            'consultation_date': datetime.today().strftime('%d-%m-%Y %H:%M:%S')
+        }
+        _ = template.render(context)
+        pdf = render_to_pdf('contract/contract_pdf.html', context)
+
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "contrato_%s.pdf" % str(contract.client.fantasy_name)
+            content = "inline; filename=%s" % filename
+            download = request.GET.get("download")
+
+            if download:
+                content = "attachment; filename='%s'" % filename
+            response['Content-Disposition'] = content
+            return response
+
+        return HttpResponse("Contrato não encontrado")
