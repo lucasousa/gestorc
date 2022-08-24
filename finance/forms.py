@@ -124,9 +124,11 @@ class ContractForm(forms.ModelForm):
         super(ContractForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        if commit and self.instance.pk is None:
+        is_created = self.instance.pk is None
+        ret = super(ContractForm, self).save(commit=commit)
+        if commit and is_created:
             create_invoices(self.instance)
-        super(ContractForm, self).save(commit=commit)
+        return ret
 
 
 class InvoiceForm(forms.ModelForm):
@@ -138,6 +140,4 @@ class InvoiceForm(forms.ModelForm):
         super(InvoiceForm, self).__init__(*args, **kwargs)
 
 
-CompanyInlineFormSet = modelform_factory(
-    Company, fields=["cnpj", "fantasy_name", "social_reason", "email"], form=CompanyForm
-)
+CompanyInlineFormSet = modelform_factory(Company, fields=["cnpj", "fantasy_name", "social_reason", "email"], form=CompanyForm)
