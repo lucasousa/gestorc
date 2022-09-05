@@ -23,8 +23,6 @@ def check_pending_invoices(task_definition):
             )
         )
     )
-    print("meus ovos")
-    print(contracts)
 
     for contract in contracts.iterator():
         print(contract)
