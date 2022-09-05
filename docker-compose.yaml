@@ -1,4 +1,4 @@
-version: '3' 
+version: '3'
 services:
   web:
     restart: always
@@ -8,20 +8,20 @@ services:
       - .:/src
     ports:
       - "8000:8000"
-    env_file: 
+    env_file:
       - ".env"
-    depends_on: 
+    depends_on:
       - redis
-          
+
   celery:
       build: .
       restart: always
-      command: celery -A gestorc beat -l info
-      volumes: 
+      command: celery -A gestorc worker -l info
+      volumes:
         - .:/src
       ports:
         - "5555:5555"
-      env_file: 
+      env_file:
         - ".env"
       depends_on:
         - web
@@ -30,6 +30,6 @@ services:
   redis:
       image: "redis:alpine"
       command: redis-server
-      ports: 
+      ports:
         - "6379:6379"
-    
+

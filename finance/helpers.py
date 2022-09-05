@@ -12,7 +12,7 @@ def create_invoices(instance):
     amount_of_months_between = HASHMAP_INVOICE_FREQUENCY[instance.invoice_frequency]
     total_months = (instance.end_date - instance.start_date).days // 30
     for period in range(total_months // amount_of_months_between):
-        due_date = datetime.now() + timedelta(days=30 * (period+1) * amount_of_months_between)
+        due_date = datetime.now() + timedelta(days=30 * (period + 1) * amount_of_months_between)
         if due_date.isoweekday() == 7:
             due_date += timedelta(days=1)
         elif due_date.isoweekday() == 6:
@@ -24,15 +24,20 @@ def create_invoices(instance):
             accountant=instance.accountant,
             status=InvoiceStatus.IN_DAYS.value,
             due_date=due_date,
-            contract=instance
+            contract=instance,
         )
 
 
-def render_to_pdf(template_src, context_dict={}):
+def aux_render_pdf(template_src, context_dict={}):
     template = get_template(template_src)
-    html  = template.render(context_dict)
+    html = template.render(context_dict)
     result = BytesIO()
     pdf = pisa.pisaDocument(html, result)
+    return pdf, result
+
+
+def render_to_pdf(template_src, context_dict={}):
+    pdf, result = aux_render_pdf(template_src, context_dict)
     if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return HttpResponse(result.getvalue(), content_type="application/pdf")
     return None
