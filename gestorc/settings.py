@@ -27,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     "core",
     "finance",
     "widget_tweaks",
-    "website"
+    "website",
+    "utils"
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,29 @@ AUTH_USER_MODEL = "core.CustomUser"
 LOGIN_URL = "core:login"
 LOGIN_REDIRECT_URL = "core:index"
 LOGOUT_URL = "logout"
+
+BROKER_URL = 'redis://redis:6379/0'
+
+CELERY_BROKER_URL = BROKER_URL
+
+CELERY_RESULT_BACKEND = BROKER_URL
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+
+CELERY_TASK_SERIALIZER = 'json'
+
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_TIMEZONE = TIME_ZONE
+
+CELERY_ACKS_LATE = True
+CELERYD_PREFETCH_MULTIPLIER = 1
+
+
+# E-mail
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
