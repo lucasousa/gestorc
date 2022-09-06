@@ -25,7 +25,6 @@ def check_pending_invoices(task_definition):
     )
 
     for contract in contracts.iterator():
-        print(contract)
         invoices = contract.invoice_set.filter(
             due_date__date__lte=datetime.now().date(), status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value]
         )
