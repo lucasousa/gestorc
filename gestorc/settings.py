@@ -156,6 +156,8 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_ACKS_LATE = True
 CELERYD_PREFETCH_MULTIPLIER = 1
 
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
+
 
 # E-mail
 EMAIL_HOST = "smtp.gmail.com"
