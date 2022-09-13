@@ -29,7 +29,8 @@ def check_pending_invoices(task_definition):
             due_date__date__lte=datetime.now().date(), status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value]
         )
         _, file = aux_render_pdf(
-            "contract/contract_pdf.html", {"object": contract, "consultation_date": datetime.today().strftime("%d-%m-%Y %H:%M:%S")}
+            "core/pdf.html",
+            {"object": contract, "consultation_date": datetime.today().strftime("%d-%m-%Y %H:%M:%S"), "invoices": invoices},
         )
         send_invoice_email(invoices, contract.client.email, file.getvalue())
 
