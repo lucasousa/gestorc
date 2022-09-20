@@ -24,7 +24,7 @@
           <figure class="avatar">
             <img src="{% static 'images/logo.webp' %}" class="login-avatar">
           </figure>
-          <h3 class="title has-text-info">Entrar na conta</h3>
+          <h3 class="title has-text-primary">Entrar na conta</h3>
           <hr class="is-white">
           <form action="{% url 'core:login' %}" method="post">
             {% csrf_token %}
@@ -52,7 +52,7 @@
               </div>
             </div>
             
-            <button class="button is-block is-info is-medium is-fullwidth">
+            <button class="button is-block is-primary is-medium is-outlined is-fullwidth">
               Login
               <i class="fas fa-sign-in-alt"></i>
             </button>
