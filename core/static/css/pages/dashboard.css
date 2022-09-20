@@ -26,7 +26,7 @@ body {
 }
 
 .header-menu-top {
-  background-color: var(--green);
+  background-color: hsl(171, 100%, 41%);
   position: fixed;
   top: 0;
   width: 100%;
@@ -43,7 +43,7 @@ body {
 .logout-button {
   background: var(--pure-white);
   border: none;
-  color: var(--gray-dark);
+  color: hsl(348, 100%, 61%);
   font-weight: 500;
   transition: 150ms;
 }
@@ -79,7 +79,7 @@ body .section .columns .menu-left .menu {
 }
 
 body .section .columns .menu-left .menu .menu-list {
-  position: sticky;
+  /* position: sticky; */
   top: calc(var(--top-bar-height) + 16px);
 }
 
@@ -89,7 +89,7 @@ body .section .columns .menu-left .menu .menu-list a {
 }
 
 body .section .columns .menu-left .menu .menu-list a:hover {
-  background-color: var(--green);
+  background-color: hsl(171, 100%, 41%);
   color: var(--pure-white);
 }
 
@@ -99,7 +99,7 @@ body .section .columns .menu-left .menu .menu-list a:hover {
 }
 
 .functionalities-cards .tile a .box {
-  background-color: var(--green);
+  background-color: hsl(171, 100%, 41%);
 }
 
 .functionalities-cards .tile a .box p {
