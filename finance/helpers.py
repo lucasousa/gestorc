@@ -1,18 +1,19 @@
 from datetime import datetime, timedelta
-
-from .enums import HASHMAP_INVOICE_FREQUENCY, InvoiceStatus
-from .models import Invoice
 from io import BytesIO
+
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+
+from .enums import HASHMAP_INVOICE_FREQUENCY, InvoiceStatus
+from .models import Invoice
 
 
 def create_invoices(instance):
     amount_of_months_between = HASHMAP_INVOICE_FREQUENCY[instance.invoice_frequency]
     total_months = (instance.end_date - instance.start_date).days // 30
     for period in range(total_months // amount_of_months_between):
-        due_date = datetime.now() + timedelta(days=30 * (period + 1) * amount_of_months_between)
+        due_date = instance.start_date + timedelta(days=30 * (period + 1) * amount_of_months_between)
         if due_date.isoweekday() == 7:
             due_date += timedelta(days=1)
         elif due_date.isoweekday() == 6:

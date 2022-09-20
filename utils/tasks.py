@@ -5,11 +5,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.db.models import Exists, OuterRef
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
-from finance.helpers import aux_render_pdf
-from gestorc.celery import app
-from finance.models import Contract, Invoice
 from finance.enums import InvoiceStatus
+from finance.helpers import aux_render_pdf
+from finance.models import Contract, Invoice
+from gestorc.celery import app
 
 
 @app.task(bind=True)
@@ -29,8 +28,8 @@ def check_pending_invoices(task_definition):
             due_date__date__lte=datetime.now().date(), status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value]
         )
         _, file = aux_render_pdf(
-            "core/pdf.html",
-            {"object": contract, "consultation_date": datetime.today().strftime("%d-%m-%Y %H:%M:%S"), "invoices": invoices},
+            "contract/contract_pdf.html",
+            {"objects": invoices},
         )
         send_invoice_email(invoices, contract.client.email, file.getvalue())
 
