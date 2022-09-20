@@ -37,6 +37,10 @@ class Address(BaseModel):
     def __str__(self) -> str:
         return f"Endereço Nº {self.number}"
 
+    @property
+    def full_address(self):
+        return f"{self.street}, {self.number} - {self.neighborhood}. {self.city}-{self.state.upper()}"
+
 
 class Company(BaseModel):
     cnpj = CNPJField(masked=False, verbose_name=_("CPNJ do cliente"), blank=False, null=False)

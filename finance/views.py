@@ -54,7 +54,7 @@ class ContractList(ListView):
 
 @method_decorator(login_required, name="dispatch")
 class ContractDetail(DetailView):
-    model = Company
+    model = Contract
     template_name = "contract/details.html"
 
     def get(self, request, *args, **kwargs):

@@ -68,7 +68,7 @@
             <li>
               <a href="{% url 'finance:company_list' %}" class="has-icons-left">
                 <span class="icon is-small is-left">
-                  <i class="fas fa-home"></i>
+                  <i class="fas fa-user-tie"></i>
                 </span>
                 &nbsp;Clientes
               </a>
@@ -78,9 +78,19 @@
             <li>
               <a href="{% url 'finance:invoice_list' %}" class="has-icons-left">
                 <span class="icon is-small is-left">
-                  <i class="fas fa-home"></i>
+                  <i class="fas fa-file-invoice-dollar"></i>
                 </span>
                 &nbsp;Faturas
+              </a>
+            </li>
+          </ul>
+          <ul class="menu-list">
+            <li>
+              <a href="{% url 'finance:contract_list' %}" class="has-icons-left">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-file-signature"></i>
+                </span>
+                &nbsp;Contratos
               </a>
             </li>
           </ul>

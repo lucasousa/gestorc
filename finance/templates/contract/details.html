@@ -1,12 +1,12 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %} Academia de Ciências do Piauí | Detalhes do membro da diretor {% endblock %}
+{% block title %} GestorC | Detalhes do Contrato {% endblock %}
 
 {% block body %}
 <header class="member-header pt-4 pb-2">
   <div class="container px-4">
     <h1 class="title is-size-2-desktop is-size-2-tablet is-size-3-mobile mb-5">
-      Detalhes do membro da diretoria
+      Detalhes do Contrato
     </h1>
   </div>
 </header>
@@ -15,14 +15,34 @@
   <div class="member-content content is-size-5-desktop is-size-5-tablet is-size-6-mobile">
     <div class="member-details">
       <div class="member-details__detail">
-        <span>Titular</span>
-        <a href="{% url 'members:holders_details' object.holder.id %}">
-          {{ object.holder.name }}
+        <span>Cliente</span>
+        <a href="{% url 'finance:company_details' object.client_id %}">
+          {{ object.client.fantasy_name }}
         </a>
       </div>
       <div class="member-details__detail">
-        <span>Cargo</span>
-        <p>{{ object.office }}</p>
+        <span>Validade</span>
+        <p>{{ object.start_date|date:"d/M/Y" }} a {{ object.end_date|date:"d/M/Y" }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>Status</span>
+        <p>{{ object.get_status_display }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>Valor</span>
+        <p>{{ object.invoice_value }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>Frequência de Cobrança</span>
+        <p>{{ object.get_invoice_frequency_display }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>Faturas</span>
+          {% for invoice in object.invoice_set.all %}
+              <a href="{% url 'finance:invoice_details' invoice.id %}">
+                {{ invoice.due_date|date:"d/M/Y" }}
+              </a>{% if not forloop.last %} <br> {% endif %}
+          {% endfor %}
       </div>
     </div>
   </div>

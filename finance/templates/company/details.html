@@ -1,12 +1,12 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %} Academia de Ciências do Piauí | Detalhes do membro da diretor {% endblock %}
+{% block title %} GestorC | Detalhes do Cliente {% endblock %}
 
 {% block body %}
 <header class="member-header pt-4 pb-2">
   <div class="container px-4">
     <h1 class="title is-size-2-desktop is-size-2-tablet is-size-3-mobile mb-5">
-      Detalhes do membro da diretoria
+      Detalhes do Cliente
     </h1>
   </div>
 </header>
@@ -15,14 +15,24 @@
   <div class="member-content content is-size-5-desktop is-size-5-tablet is-size-6-mobile">
     <div class="member-details">
       <div class="member-details__detail">
-        <span>Titular</span>
-        <a href="{% url 'members:holders_details' object.holder.id %}">
-          {{ object.holder.name }}
-        </a>
+        <span>Nome Fantasia</span>
+        <p>{{ object.fantasy_name }}</p>
       </div>
       <div class="member-details__detail">
-        <span>Cargo</span>
-        <p>{{ object.office }}</p>
+        <span>Razão Social</span>
+        <p>{{ object.social_reason }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>Email</span>
+        <p>{{ object.email }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>CNPJ</span>
+        <p>{{ object.cnpj }}</p>
+      </div>
+      <div class="member-details__detail">
+        <span>Endereço</span>
+        <p>{{ object.address.full_address }}</p>
       </div>
     </div>
   </div>
