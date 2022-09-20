@@ -5,4 +5,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("core/", include("core.urls", namespace="core")),
     path("finance/", include("finance.urls", namespace="finance")),
+    path("", include("website.urls", namespace="website")),
 ]
