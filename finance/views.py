@@ -346,7 +346,8 @@ class GeneratePDF(View):
 
 class SendEmail(View):
     def get(self, request, *args, **kwargs):
-        check_pending_invoices.apply_async(args=[kwargs["id"]])
+        check_pending_invoices(kwargs["id"])
+        # check_pending_invoices.apply_async(args=[kwargs["id"]])
         messages.success(request, "Faturas enviadas por email.")
         return HttpResponseRedirect(self.get_success_url())
 

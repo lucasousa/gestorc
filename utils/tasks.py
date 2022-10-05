@@ -11,8 +11,8 @@ from finance.models import Contract, Invoice
 from gestorc.celery import app
 
 
-@app.task(bind=True)
-def check_pending_invoices(task_definition, contract_id=None):
+# @app.task(bind=True)
+def check_pending_invoices(contract_id=None):
     if contract_id:
         contracts = Contract.objects.filter(id=contract_id)
     else:
