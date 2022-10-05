@@ -10,13 +10,15 @@ from .views import (
     ContractDetail,
     ContractList,
     ContractUpdate,
+    GeneratePDF,
     InvoiceCreate,
     InvoiceDetail,
     InvoiceList,
     InvoiceUpdate,
+    SendEmail,
     company_delete,
     contract_delete,
-    invoice_delete, GeneratePDF,
+    invoice_delete,
 )
 
 app_name = "finance"
@@ -101,5 +103,6 @@ urlpatterns = [
         permission_required("invoice:invoice_delete", raise_exception=True)(invoice_delete),
         name="invoice_delete",
     ),
-    path('contract-to-pdf/<int:id>/', GeneratePDF.as_view(), name="render-contract-pdf")
+    path("contract-to-pdf/<int:id>/", GeneratePDF.as_view(), name="render-contract-pdf"),
+    path("invoices-mail/<int:id>/", SendEmail.as_view(), name="invoices-mail"),
 ]

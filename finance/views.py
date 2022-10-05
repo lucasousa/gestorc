@@ -8,6 +8,7 @@ from django.template.loader import get_template
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, View
+from utils.tasks import check_pending_invoices
 
 from .forms import AddressForm, ContractForm, InvoiceForm
 from .helpers import render_to_pdf
@@ -341,3 +342,13 @@ class GeneratePDF(View):
             return response
 
         return HttpResponse("Contrato não encontrado")
+
+
+class SendEmail(View):
+    def get(self, request, *args, **kwargs):
+        check_pending_invoices.apply_async(args=[kwargs["id"]])
+        messages.success(request, "Faturas enviadas por email.")
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("finance:invoice_list")

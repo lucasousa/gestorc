@@ -12,20 +12,23 @@ from gestorc.celery import app
 
 
 @app.task(bind=True)
-def check_pending_invoices(task_definition):
-    contracts = Contract.objects.filter(
-        Exists(
-            Invoice.objects.filter(
-                contract_id=OuterRef("pk"),
-                due_date__date__lte=datetime.now().date(),
-                status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value],
+def check_pending_invoices(task_definition, contract_id=None):
+    if contract_id:
+        contracts = Contract.objects.filter(id=contract_id)
+    else:
+        contracts = Contract.objects.filter(
+            Exists(
+                Invoice.objects.filter(
+                    contract_id=OuterRef("pk"),
+                    due_date__lte=datetime.now().date(),
+                    status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value],
+                )
             )
         )
-    )
 
     for contract in contracts.iterator():
         invoices = contract.invoice_set.filter(
-            due_date__date__lte=datetime.now().date(), status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value]
+            due_date__lte=datetime.now().date(), status__in=[InvoiceStatus.OVERDUE.value, InvoiceStatus.IN_DAYS.value]
         )
         _, file = aux_render_pdf(
             "contract/contract_pdf.html",

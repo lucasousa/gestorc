@@ -87,6 +87,11 @@
                                         <i class="fas fa-print"></i>
                                     </span>
                                 </a>
+                                <a href="{% url 'finance:invoices-mail' c.id %}" class="button is-dark">
+                                    <span class="icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
