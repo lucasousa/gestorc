@@ -162,10 +162,8 @@
             <div class="mx-auto box p-6 has-background-light has-text-centered">
               <h4 class="is-size-5 mb-2 has-text-weight-bold">Entre em contato!</h4>
               <p class="has-text-grey-dark mb-4">Saiba mais sobre o GestorC.</p>
-              <form
-              action=""
-              method="POST"
-            >
+              <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
               <div class="field has-text-left">
                 <label class="label">Email</label>
                 <div class="control has-icons-left">
@@ -173,7 +171,8 @@
                     class="input"
                     type="email"
                     placeholder="Seu e-mail"
-                    name="Email"
+                    name="email"
+                    required=""
                   />
                   <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
@@ -186,7 +185,8 @@
                   <textarea
                     class="textarea"
                     placeholder="Escreva sua mensagem"
-                    name="Message"
+                    name="content"
+                    required=""
                   ></textarea>
                 </div>
               </div>
@@ -244,5 +244,27 @@
     </footer>
   </div>
 </body>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L66G3RYN7M');
+</script> 
+
+{% if messages %}
+{% for message in messages %}
+<script>
+  swal({
+    "text": "{{message}}",
+    "icon": "success",
+    "button": "Fechar!",
+  })
+</script>
+{% endfor %}
+{% endif %}
+
 
 </html>
