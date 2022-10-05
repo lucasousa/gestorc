@@ -1,22 +1,20 @@
 from django import forms
-from django.forms import inlineformset_factory, modelformset_factory, modelform_factory
-from django_cpf_cnpj.forms import CNPJForm
-from django_cpf_cnpj.fields import CNPJField
-
-from django.forms.fields import CharField
 from django.conf import settings
+from django.core import validators
 from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory, modelform_factory, modelformset_factory
+from django.forms.fields import CharField
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
-from django.core import validators
-
-from django_cpf_cnpj.validators import validate_cpf, validate_cnpj
-from django_cpf_cnpj.widgets import CPFWidget, CNPJWidget
-from django_cpf_cnpj.cpf import cpf_to_python
 from django_cpf_cnpj.cnpj import cnpj_to_python
+from django_cpf_cnpj.cpf import cpf_to_python
+from django_cpf_cnpj.fields import CNPJField
+from django_cpf_cnpj.forms import CNPJForm
+from django_cpf_cnpj.validators import validate_cnpj, validate_cpf
+from django_cpf_cnpj.widgets import CNPJWidget, CPFWidget
 
-from .models import Address, Company, Contract, Invoice
 from .helpers import create_invoices
+from .models import Address, Company, Contract, Invoice
 
 
 class CustomCNPJForm(CNPJForm):

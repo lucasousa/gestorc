@@ -70,8 +70,8 @@ class Invoice(BaseModel):
     )
     contract = models.ForeignKey("finance.Contract", verbose_name=_("Contrato"), on_delete=models.CASCADE, null=False, blank=False)
     status = models.CharField(_("Status da fatura"), max_length=20, choices=InvoiceStatus.choices)
-    payment_date = models.DateTimeField(_("Data de pagamento"), auto_now=False, auto_now_add=False, null=True)
-    due_date = models.DateTimeField(_("Data de vencimento"), auto_now=False, auto_now_add=False)
+    payment_date = models.DateField(_("Data de pagamento"), auto_now=False, auto_now_add=False, null=True)
+    due_date = models.DateField(_("Data de vencimento"), auto_now=False, auto_now_add=False)
 
     class Meta:
         verbose_name = "Recibo"
@@ -86,8 +86,8 @@ class Contract(BaseModel):
     accountant = models.ForeignKey(
         "core.CustomUser", verbose_name=_("Contador"), on_delete=models.CASCADE, null=False, blank=False
     )
-    start_date = models.DateTimeField(_("Data de início do contrato"), auto_now=False, auto_now_add=False)
-    end_date = models.DateTimeField(_("Data de fim do contrato"), auto_now=False, auto_now_add=False)
+    start_date = models.DateField(_("Data de início do contrato"), auto_now=False, auto_now_add=False)
+    end_date = models.DateField(_("Data de fim do contrato"), auto_now=False, auto_now_add=False)
     status = models.CharField(_("Status do contrato"), max_length=20, choices=ContractStatus.choices)
     invoice_value = models.DecimalField(_("Valor da fatura"), max_digits=7, decimal_places=2, default=50)
     invoice_frequency = models.CharField(
